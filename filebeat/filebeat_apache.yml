@@ -15,7 +15,7 @@ filebeat:
         #- /var/log/*.log
         #- c:\programdata\elasticsearch\logs\*
         #- /Users/kulekci/Desktop/Kulekci.net/Slides/es-presentation-examples/apacheLog/filebeat/apache.log
-        - /tmp/logs/*
+        - /tmp/logs/*.log
 
       # Configure the file encoding for reading files with international characters
       # following the W3C recommendation for HTML5 (http://www.w3.org/TR/encoding).
