@@ -1,0 +1,110 @@
+{
+  "template": "apache*",
+  "settings": {
+    "index.refresh_interval": "5s"
+  },
+  "mappings": {
+    "apache": {
+      "dynamic_templates": [
+        {
+          "message_field": {
+            "mapping": {
+              "fielddata": {
+                "format": "disabled"
+              },
+              "index": "analyzed",
+              "omit_norms": true,
+              "type": "string"
+            },
+            "match_mapping_type": "string",
+            "match": "message"
+          }
+        },
+        {
+          "string_fields": {
+            "mapping": {
+              "fielddata": {
+                "format": "disabled"
+              },
+              "index": "analyzed",
+              "omit_norms": true,
+              "type": "string",
+              "fields": {
+                "raw": {
+                  "ignore_above": 256,
+                  "index": "not_analyzed",
+                  "type": "string"
+                }
+              }
+            },
+            "match_mapping_type": "string",
+            "match": "*"
+          }
+        }
+      ],
+      "properties": {
+        "@timestamp": {
+          "type": "date"
+        },
+        "logTimestamp": {
+          "type": "date",
+          "format": "dd/MMM/YYYY:HH:mm:ss Z"
+        },
+        "clientip": {
+          "type": "ip"
+        },
+        "geoip": {
+          "dynamic": true,
+          "properties": {
+            "location": {
+              "type": "geo_point"
+            },
+            "ip": {
+              "type": "ip"
+            },
+            "latitude": {
+              "type": "float"
+            },
+            "longitude": {
+              "type": "float"
+            }
+          },
+          "type": "object"
+        },
+        "@version": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "referer": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "request": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "httpversion": {
+          "type": "float"
+        },
+        "input_type": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "type": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "response": {
+          "type": "integer"
+        },
+        "bytes": {
+          "type": "long"
+        }
+      },
+      "_all": {
+        "enabled": true
+      }
+    }
+  },
+  "aliases": {}
+}
